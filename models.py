@@ -30,11 +30,15 @@ class Cupcake(db.Model):
         c = self 
         return(f"ID:{c.id}, flavor:{c.flavor}, size:{c.size},rating:{c.rating}, image:{c.image}")
     
+
     id = db.Column(db.Integer, autoincrement=True,
                    primary_key = True)
+  
     
     flavor = db.Column(db.String,
                        nullable=False)
+    
+    
     
     size = db.Column(db.String,
                        nullable=False)
@@ -56,4 +60,6 @@ def serialize(cupcake):
         "rating": cupcake.rating,
         "image": cupcake.image
     }
+
+
 
