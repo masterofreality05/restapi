@@ -4,7 +4,7 @@ from flask import jsonify, request, render_template
 @app.route("/")
 def show_homepage():
    """view function to render the homepage"""
-   return render_temlate("home.html")
+   return render_template("home.html")
 
 @app.route("/api/cupcakes")
 def cupcake_api_get_handler():
@@ -32,6 +32,9 @@ def create_new_cupcake():
       setattr(new_cupcake, k, v)
 
     serialized = serialize(new_cupcake)
+
+    db.session.add(new_cupcake)
+    db.session.commit()
 
     return (jsonify(cupcake=serialized), 201)
 
