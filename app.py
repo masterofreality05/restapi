@@ -35,8 +35,10 @@ def create_new_cupcake():
 
     db.session.add(new_cupcake)
     db.session.commit()
+    returned_cupcake = Cupcake.query.filter(Cupcake.flavor == request.json.get('flavor')).first()
+    serialized = serialize(returned_cupcake)
 
-    return (jsonify(cupcake=serialized), 201)
+    return (jsonify(cupcake= serialized), 201)
 
 @app.route("/api/cupcakes/<int:cupcake_id>" , methods=['PATCH'])
 def edit_cupcake(cupcake_id):

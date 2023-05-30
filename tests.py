@@ -85,17 +85,16 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_create_cupcake(self):
+        """testing the post route of our RESTful API"""
         with app.test_client() as client:
             url = "/api/cupcakes"
             resp = client.post(url, json=CUPCAKE_DATA_2)
-
             self.assertEqual(resp.status_code, 201)
-
             data = resp.json
-            print("***""/(/§/(§""(/§§(", resp.json)
 
             # don't know what ID we'll get, make sure it's an int & normalize
             self.assertIsInstance(data['cupcake']['id'], int)
+
             del data['cupcake']['id']
 
             self.assertEqual(data, {
@@ -108,3 +107,21 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_delete_cupcake(self):
+        """test the DELETE route of our RESTful API"""
+        with app.test_client() as client:
+                url = "/api/cupcakes"
+                resp = client.post(url, json=CUPCAKE_DATA_2)
+                
+                cupcake = Cupcake.query.filter(Cupcake.flavor == CUPCAKE_DATA_2['flavor']).first()
+                id = cupcake.id
+                
+                resp = client.delete(f"/api/cupcakes/{id}")    
+
+                print("our response is", resp.json, cupcake) 
+
+                self.assertEqual(resp.json['message'], 'deleted')
+
+
+

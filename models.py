@@ -7,7 +7,7 @@ app.app_context().push()
 app.secret_key ="itsasecret"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes'
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
